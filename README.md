@@ -2,11 +2,11 @@
 # Goal Recognition with Path Signature:  
 
 This repository provides the code and dataset from the paper: *Online Goal Recognition using Path Signature and Dynamic Time Warping*
-To run the experiments, follow these steps:
 
 # Install requirements
 
 Symk Top-K planner: https://github.com/speckdavid/symk
+
 PPDL parser: https://github.com/pucrs-automated-planning/pddl-parser
 
 Install requirements:

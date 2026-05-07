@@ -72,3 +72,4 @@ temp/
 # Identifier files
 # =========================
 *.Identifier
+*:Zone.Identifier

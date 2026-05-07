@@ -79,28 +79,12 @@ def get_tableResults():
         summary['grps_dtw'] = means
         summary['grps_dtw_std'] = stds
 
-
-        # # Make table
-        # table_data = []
-        # for idx, row in summary.iterrows():
-        #     table_data.append([
-        #         f"{row['baseline']:.2e} (±{row['baseline_std']:.2e})",
-        #         f"{row['recompute']:.2e} (±{row['recompute_std']:.2e})",
-        #         f"{row['vector']:.2e} (±{row['vector_std']:.2e})",
-        #         f"{row['grps']:.2e} (±{row['grps_std']:.2e})",
-        #         f"{row['grps_dtw']:.2e} (±{row['grps_dtw_std']:.2e})"
-        #     ])
-
-        #table_df = pd.DataFrame(summary)
-
         # Save table to CSV
         summary.to_csv('./continuous_methods_table_results.csv', float_format='%.4f')
 
         print("Table saved to ./continuous_methods_table_results.csv")
 
         
-
-
 def plot_BarGraph_General():
 
     # Provided data
@@ -255,15 +239,10 @@ def plot_trajectorie():
 
                 O_Optimal = loaded_data['O_Optimal']
 
-                print(O_Optimal)
-                bla
-
                 scenario.PlotGoals(scenario.goalPoints)
                 plt.plot(O_Optimal[0], O_Optimal[1])
                 plt.show()
             
-            bla
-
             plt.savefig(directory_path + '/Figures/scenarios' + '/%s.png' % scenario.name)  # Save as PDF file
             plt.clf()  # Clear the current figure
 
