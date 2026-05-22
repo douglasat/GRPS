@@ -59,34 +59,46 @@ def plot_sequence(data_dict, topk):
         norm = Normalize(vmin=vmin, vmax=vmax)
 
         # Plot the surface
-        surf = ax.plot_surface(X1_grid, X2_grid, out_grid, cmap='viridis', alpha=1)
+        surf = ax.plot_surface(X1_grid, X2_grid, out_grid, cmap='viridis', vmin=vmin, vmax=vmax, alpha=1)
 
         # Add a color bar and set the limits for color bar scale
-        fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10)
-        # cbar = fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10)
-        # cbar.set_label('PPV(%)')
-        # cbar.set_ticks([round(a, 1) for a in np.linspace(vmin, vmax, num=5, endpoint=True)])  # Show only the min and max values on the color bar
+        cbar = fig.colorbar(
+            surf,
+            ax=ax,
+            shrink=0.7,
+            aspect=25,
+            pad=0.01
+        )
 
+        ticks = [a for a in np.linspace(vmin, vmax, num=5)]
+
+        cbar.set_ticks(ticks)
+        cbar.set_ticklabels([f"{t:.1f}" for t in ticks])
+
+        cbar.ax.tick_params(labelsize=22)
 
         # Plot the original points as a scatter plot
         scatter = ax.scatter(X1, X2, out, color='red', label='Original Points')
             
-        ax.set_xlabel('Merge', fontsize=12)
-        ax.set_ylabel('Prune', fontsize=12)
-        ax.set_zlabel('PPV(%)', fontsize=12)
-        plt.title("Top-k = %d" % (k))
+        ax.set_xlabel('Merge', fontsize=22, labelpad=15)
+        ax.set_ylabel('Prune', fontsize=22, labelpad=15)
+        ax.set_zlabel('PPV(%)', fontsize=22, labelpad=10)
+        #plt.title("Top-k = %d" % (k))
         
         # Define custom tick values for x and y axes
-        tick_values = np.arange(0, 2.2, 0.2)  # Generate values from 0 to 2 with step 0.2
+        tick_values = np.arange(0, 2.2, 0.5)  # Generate values from 0 to 2 with step 0.2
         ax.set_xticks(tick_values)
         ax.set_yticks(tick_values)
+        ax.tick_params(axis='both', labelsize=22)
 
         # Set a fixed view position
         ax.view_init(elev=30, azim=45)  # Adjust these values as needed
 
+        fig.savefig(f"./PS_grid_data/grid_k{k}.pdf", format="pdf")
+
     plt.show()
 
-def plot_group(data_dict):
+def plot_group(data_dict, method):
     # Extract data into separate lists
     X1 = []
     X2 = []
@@ -131,34 +143,54 @@ def plot_group(data_dict):
     vmax = np.max(out_grid)  # Set maximum value for color bar
 
     # Use a logarithmic color scale
-    norm = Normalize(vmin=vmin, vmax=vmax)
+    #norm = Normalize(vmin=vmin, vmax=vmax)
 
     # Plot the surface
-    surf = ax.plot_surface(X1_grid, X2_grid, out_grid, cmap='viridis', alpha=1)
+    surf = ax.plot_surface(X1_grid, X2_grid, out_grid, cmap='viridis', vmin=vmin, vmax=vmax, alpha=1)
 
     # Add a color bar and set the limits for color bar scale
-    fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10)
-    # cbar = fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10)
-    # cbar.set_label('PPV(%)')
-    # cbar.set_ticks([round(a, 1) for a in np.linspace(vmin, vmax, num=5, endpoint=True)])  # Show only the min and max values on the color bar
+    cbar = fig.colorbar(
+        surf,
+        ax=ax,
+        shrink=0.7,
+        aspect=25,
+        pad=0.01
+    )
 
+    ticks = [a for a in np.linspace(vmin, vmax, num=5)]
+
+    cbar.set_ticks(ticks)
+    cbar.set_ticklabels([f"{t:.1f}" for t in ticks])
+
+    cbar.ax.tick_params(labelsize=22)
+
+    # fig.subplots_adjust(
+    #     left=0.0,
+    #     right=1.0,
+    #     bottom=0.0,
+    #     top=1.0
+    # )
 
     # Plot the original points as a scatter plot
     scatter = ax.scatter(X1, X2, out, color='red', label='Original Points')
             
-    ax.set_xlabel('Merge')
-    ax.set_ylabel('Prune')
-    ax.set_zlabel('PPV(%)')
-    # ax.tick_params(labelsize=12)
-    plt.title("Top-k = [1, 5, 10, 15]")
+    ax.set_xlabel('Merge', fontsize=22, labelpad=15)
+    ax.set_ylabel('Prune', fontsize=22, labelpad=15)
+    ax.set_zlabel('PPV(%)', fontsize=22, labelpad=10)
+    #plt.title("Top-k = [1, 5, 10, 15]")
 
     # Define custom tick values for x and y axes
-    tick_values = np.arange(0, 2.2, 0.2)  # Generate values from 0 to 2 with step 0.2
+    tick_values = np.arange(0, 2.2, 0.5)  # Generate values from 0 to 2 with step 0.2
     ax.set_xticks(tick_values)
     ax.set_yticks(tick_values)
 
     # Set a fixed view position
     ax.view_init(elev=30, azim=45)  # Adjust these values as needed
+
+    ax.tick_params(axis='both', labelsize=22)
+
+    fig.savefig(f"./{method}/{method}.pdf",format="pdf")
+
     plt.show()
 
 def get_allscenarios():
@@ -217,36 +249,59 @@ def process_input():
 if __name__ == "__main__":
     method = process_input()
 
-    if not os.path.exists('./%s' % method):
-        os.makedirs('./%s' % method)
+    if not os.path.exists(f'./{method}'):
+        os.makedirs(f'./{method}')
 
     # Get all files in the directory
     directory_path = os.path.dirname(__file__)
-    files = [file[:-4] for file in os.listdir(directory_path + '/scenarios') if os.path.isfile(os.path.join(directory_path + '/scenarios', file))]
+
+    files = [
+        file[:-4]
+        for file in os.listdir(directory_path + '/scenarios')
+        if os.path.isfile(os.path.join(directory_path + '/scenarios', file))
+    ]
+
     files = sorted(files)
 
-    all_dicts  = []
+    all_dicts = []
+
     for file in files[:10]:
-        with open('./%s/%s_grid_dict.pkl' % (method, file), "rb") as pkl_file:
-                data_dict = pickle.load(pkl_file)
+        with open(f'./{method}/{file}_grid_dict.pkl', "rb") as pkl_file:
+            data_dict = pickle.load(pkl_file)
 
         all_dicts.append(data_dict)
 
-
+    # Create DataFrame
     df = pd.DataFrame(all_dicts)
+
+    # Drop columns with NaNs
     df = df.dropna(axis=1)
+
+    # Ensure columns are MultiIndex
+    if not isinstance(df.columns, pd.MultiIndex):
+        df.columns = pd.MultiIndex.from_tuples(df.columns)
 
     # Generate grid table for the 10 scenarios
     get_allscenarios()
-    
-    # Group columns by the first two elements of their names
-    grouped_columns = df.groupby(lambda col: (col[0], col[1]), axis=1)
-    
-    # Calculate the mean for each group
-    df_mean = grouped_columns.mean()
+
+    # ==========================================================
+    # FIX FOR NEW PANDAS VERSIONS
+    # ==========================================================
+
+    # Group columns by first two levels
+    df_mean = (
+        df.T
+          .groupby(level=[0, 1])
+          .mean()
+          .T
+    )
+
+    # Mean over scenarios
     mean_per_group = df_mean.mean(axis=0)
 
-    plot_group(df_mean.mean(axis=0).to_dict())
-    
-    plot_sequence(df.mean(axis=0).to_dict(), [1, 5, 10, 15])
+    # Plot grouped means
+    plot_group(mean_per_group.to_dict(), method)
+
+    # Plot full sequence
+    # plot_sequence(df.mean(axis=0).to_dict(), [1, 15])
     

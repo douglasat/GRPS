@@ -274,7 +274,7 @@ def plot_Scenarios():
             plt.clf()  # Clear the current figure
 
 if __name__ == "__main__":
-    get_tableResults()
+    #get_tableResults()
     #plot_BarGraph_General()
     #plot_BarGraph()
     #plot_Scenarios()
