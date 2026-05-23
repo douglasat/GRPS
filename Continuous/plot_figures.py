@@ -132,19 +132,24 @@ def plot_BarGraph_General():
         ax.bar(bar_positions + bar_width, average_grps, width=bar_width, label='GRPS', align='center', yerr=margin_error_grps, capsize=4, color='green', hatch='xx')
         ax.bar(bar_positions + bar_width*2, average_grps_dtw, width=bar_width, label='GRPS+DTW', align='center', yerr=margin_error_grps_dtw, capsize=4, color='purple', hatch='-')
 
+        TITLE_SIZE  = 28
+        LABEL_SIZE  = 28
+        TICK_SIZE   = 28
+        LEGEND_SIZE = 28
+        
         # Adding labels and title
-        ax.set_title('(a) Continuous Domains', fontsize=24)
-        ax.set_xlabel('Fraction of Observations', fontsize=24)
-        ax.set_ylabel('PPV(%)', fontsize=24)
+        ax.set_title('(a) Continuous Domains', fontsize=TITLE_SIZE)
+        ax.set_xlabel('Fraction of Observations', fontsize=TITLE_SIZE)
+        ax.set_ylabel('PPV(%)', fontsize=LABEL_SIZE)
         ax.set_xticks(bar_positions)
-        ax.set_xticklabels(observations, fontsize=24)
-        ax.tick_params(axis='y', labelsize=24)
-        ax.legend(fontsize=24, loc='upper center', ncol=5)
+        ax.set_xticklabels(observations, fontsize=TICK_SIZE)
+        ax.tick_params(axis='y', labelsize=TICK_SIZE)
+        ax.legend(fontsize=LEGEND_SIZE, loc='upper center', ncol=5, columnspacing=1.5)
         ax.set_ylim(0, 75)
 
         # Set font size of axes labels
-        fig.gca().xaxis.label.set_fontsize(24)
-        fig.gca().yaxis.label.set_fontsize(24)
+        #fig.gca().xaxis.label.set_fontsize(24)
+        #fig.gca().yaxis.label.set_fontsize(24)
 
         fig.tight_layout()
         fig.savefig('./Figures/continuous_comp.pdf')  # Save
@@ -275,7 +280,7 @@ def plot_Scenarios():
 
 if __name__ == "__main__":
     #get_tableResults()
-    #plot_BarGraph_General()
+    plot_BarGraph_General()
     #plot_BarGraph()
     #plot_Scenarios()
     #plot_trajectorie()
