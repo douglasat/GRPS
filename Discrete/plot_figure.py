@@ -53,7 +53,7 @@ def plot_BarGraph_General():
     fig, ax = plt.subplots(figsize=(17.6, 6), dpi=300)
 
     plt.bar(bar_positions + offsets[0], average_mirroring, width=bar_width, label='Mirroring', align='center', yerr=margin_error_mirroring, capsize=4, color='blue', hatch="//")
-    plt.bar(bar_positions + offsets[1], average_landmarks, width=bar_width, label='Landmarks', align='center', yerr=margin_error_landmarks, capsize=4, color='brown', hatch="\\")
+    plt.bar(bar_positions + offsets[1], average_landmarks, width=bar_width, label='Landmarks', align='center', yerr=margin_error_landmarks, capsize=4, color='gray', hatch="\\")
     plt.bar(bar_positions + offsets[2], average_mirroring_landmarks, width=bar_width, label='Mirroring with Landmarks', align='center', yerr=margin_error_mirroring_landmarks, capsize=4, color='pink', hatch="o")
     plt.bar(bar_positions + offsets[3], average_vector, width=bar_width, label='Vector', align='center', yerr=margin_error_vector, capsize=4, color='red', hatch="||")
     plt.bar(bar_positions + offsets[4], average_grps, width=bar_width, label='GRPS', align='center', yerr=margin_error_grps, capsize=4, color='green', hatch='xx')
